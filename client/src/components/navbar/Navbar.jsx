@@ -1,5 +1,3 @@
-// navbar/Navbar.js
-
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AuthService from "../auth/AuthService";
@@ -26,7 +24,7 @@ class Navbar extends Component {
         <nav className="nav-style">
           <ul>
             <li>
-              {/* <a onClick={this.handleLogout}>Logout</a> */}
+              <a onClick={this.handleLogout}>Logout</a>
             </li>
           </ul>
 

@@ -18,19 +18,6 @@ const login = (req, user) => {
   });
 };
 
-router.get("/login", (req, res, next) => {
-  const dataView = {
-    auth: true
-  }
-  if (req.query.error) {
-    res.render("auth/login", {dataView,
-      message: "Cuenta no activada, verifica tu email."
-    });
-  } else {
-    res.render("auth/login", {dataView, message: req.flash("error") });
-  }
-});
-
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, theUser, failureDetails) => {
     if (err) next(new Error("Something went wrong"));
@@ -47,19 +34,8 @@ router.get("/currentuser", (req, res, next) => {
   }
 });
 
-router.get("/signup", (req, res, next) => {
-  const dataView = {
-    auth: true
-  }
-  if (req.query.error) {
-    res.render("auth/signup", {dataView, message: "User not found" });
-  } else {
-    res.render("auth/signup", {dataView});
-  }
-});
-
 router.post("/signup", (req, res, next) => {
-  const { username, password, email, userType, name } = req.body;
+  const { username, password } = req.body;
   if (!username || !password) {
     next(new Error("You must provide both username and password"));
   }
@@ -73,9 +49,9 @@ router.post("/signup", (req, res, next) => {
       return new User({
         username,
         password: hashPass,
-        email,
-        userType,
-        name
+        // email,
+        // userType,
+        // name
       }).save();
     })
     .then(savedUser => login(req, savedUser))
@@ -89,7 +65,7 @@ router.get("/logout", (req, res) => {
 });
 
 router.use((err, req, res, next) => {
-  res.status(500).json({ message: err.message });
+  res.status(304).json({ message: 'User not found' });
 });
 
 module.exports = router;
