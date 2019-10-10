@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
+const EscapeRooms = require('./../models/EscapeRooms')
+const Rooms = require('./../models/Rooms')
+const User = require('./../models/User')
 
 const experienceSchema = new Schema({
-  name: String,
-  email: String,
-  roomsDone: [{ type : Schema.Types.ObjectId, ref: 'Rooms' }]
+  escapeDone: [{ type : Schema.Types.ObjectId, ref: 'EscapeRooms' }],
+  roomsDone: [{ type : Schema.Types.ObjectId, ref: 'Rooms' }],
+  team: [{ type : Schema.Types.ObjectId, ref: 'User' }],
+  date: Date,
+  picture: String
 }, {
   timestamps: {
     createdAt: 'created_at',
@@ -12,5 +17,5 @@ const experienceSchema = new Schema({
   }
 });
 
-const User = mongoose.model('User', experienceSchema);
-module.exports = User;
+const Experience = mongoose.model('Experience', experienceSchema);
+module.exports = Experience;
