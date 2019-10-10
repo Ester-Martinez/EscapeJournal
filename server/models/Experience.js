@@ -4,7 +4,7 @@ const Schema   = mongoose.Schema;
 const experienceSchema = new Schema({
   name: String,
   email: String,
-  roomsDone: [{ type : Schema.Types.ObjectId, ref: 'EscapeRooms' }]
+  roomsDone: [{ type : Schema.Types.ObjectId, ref: 'Rooms' }]
 }, {
   timestamps: {
     createdAt: 'created_at',
