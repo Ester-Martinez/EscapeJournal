@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AuthService from "../auth/AuthService";
-import "./Navbar.css"
+import "./Navbar.css";
 
 class Navbar extends Component {
   constructor(props) {
@@ -24,7 +24,22 @@ class Navbar extends Component {
         <nav className="nav-style">
           <ul>
             <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <Link to="/signup">Add experience</Link>
+            </li>
+            <li>
+              <Link to="/signup">Add friend</Link>
+            </li>
+            <li>
+              <Link to="/signup">My profile</Link>
+            </li>
+            <li>
               <a onClick={this.handleLogout}>Logout</a>
+            </li>
+            <li>
+              <Link to="/signup">Search</Link>
             </li>
           </ul>
 
