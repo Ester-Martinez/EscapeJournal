@@ -7,6 +7,7 @@ const userSchema = new Schema({
   email: String,
   userType: {type: String, enum: ['escapista', 'sala', 'admin'], default: 'escapista'},
   name: String,
+  experience: [{ type : Schema.Types.ObjectId, ref: 'Experience' }],
   roomsDone: [{ type : Schema.Types.ObjectId, ref: 'EscapeRooms' }]
 }, {
   timestamps: {

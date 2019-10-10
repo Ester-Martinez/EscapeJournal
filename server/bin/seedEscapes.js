@@ -5,7 +5,7 @@
 
 const mongoose = require("mongoose");
 const EscapeRoom = require("../models/EscapeRooms");
-const escapeRooms = require('../escapeRooms')
+const escapeRooms = require('../escapeRoomsMad')
 
 mongoose
   .connect('mongodb://localhost/escapejournal-back', {useNewUrlParser: true})
@@ -17,18 +17,40 @@ mongoose
   });
 
 
-  EscapeRoom.deleteMany()
+EscapeRoom.deleteMany()
 .then(() => {
-  return EscapeRoom.create(escapeRooms) 
+  escapeRooms.forEach(escape => {
+    let {name, email, phone, address, web_page, trip_advisor, facebook, google_map_link, post_code, instagram} = escape
+    let coordinates = [escape.longitude, escape.latitude]
+    let city = escape.city.id;
+    let province = escape.city.province.id;
+    let newScape = {
+      name: name,
+      email: email,
+      phone: phone,
+      address: address,
+      web_page: web_page,
+      trip_advisor: trip_advisor,
+      facebook: facebook,
+      location: {
+        type: "Point",
+        coordinates: coordinates
+      },
+      google_map_link: google_map_link,
+      post_code: post_code,
+      instagram: instagram,
+    city: city,
+    province: province
+    }
+    EscapeRoom.create(newScape)
+    .then(escapeSaved => mongoose.disconnect())
+    .catch(err => {
+      mongoose.disconnect()
+      throw err
+    })
+  })
 })
-.then(escapesCreated => {
-  console.log(`${escapesCreated.length} escapes created with the following id:`);
-  console.log(escapesCreated.map(u => u._id));
-})
-.then(() => {
-  // Close properly the connection to Mongoose
-  mongoose.disconnect()
-})
+
 .catch(err => {
   mongoose.disconnect()
   throw err
