@@ -3,6 +3,7 @@ const passport = require("passport");
 const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 const login = (req, user) => {
   return new Promise((resolve, reject) => {
@@ -36,21 +37,28 @@ router.get("/currentuser", (req, res, next) => {
 
 router.post("/signup", (req, res, next) => {
   const { username, password, email, name } = req.body;
+  console.log("req.body", req.body);
+  console.log("email", email);
+  console.log("username", username);
+  console.log("password", password);
+  console.log("name", name);
   if (!username || !password) {
     next(new Error("You must provide both username and password"));
   }
   User.findOne({ username })
     .then(foundUser => {
       if (foundUser) throw new Error("Username already exists");
-
+      
+      const validationCode = crypto.randomBytes(20).toString("hex");
       const salt = bcrypt.genSaltSync(10);
       const hashPass = bcrypt.hashSync(password, salt);
-
       return new User({
         username,
         password: hashPass,
         email,
-        name
+        name,
+        validationCode,
+        guest: false,
       }).save();
     })
     .then(savedUser => login(req, savedUser))
@@ -64,7 +72,7 @@ router.get("/logout", (req, res) => {
 });
 
 router.use((err, req, res, next) => {
-  res.status(304).json({ message: 'User not found' });
+  res.status(304).json({ message: "User not found" });
 });
 
 module.exports = router;
