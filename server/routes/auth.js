@@ -35,7 +35,7 @@ router.get("/currentuser", (req, res, next) => {
 });
 
 router.post("/signup", (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password, email, name } = req.body;
   if (!username || !password) {
     next(new Error("You must provide both username and password"));
   }
@@ -49,9 +49,8 @@ router.post("/signup", (req, res, next) => {
       return new User({
         username,
         password: hashPass,
-        // email,
-        // userType,
-        // name
+        email,
+        name
       }).save();
     })
     .then(savedUser => login(req, savedUser))

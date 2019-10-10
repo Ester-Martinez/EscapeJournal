@@ -1,8 +1,3 @@
-// Seeds file that remove all users and create 2 new users
-
-// To execute this seed, run from the root of the project
-// $ node bin/seeds.js
-
 const mongoose = require("mongoose");
 const User = require("../models/User");
 const Users = require('../Users')
@@ -26,7 +21,6 @@ mongoose
   console.log(usersCreated.map(u => u._id));
 })
 .then(() => {
-  // Close properly the connection to Mongoose
   mongoose.disconnect()
 })
 .catch(err => {
