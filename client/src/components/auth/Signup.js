@@ -7,7 +7,7 @@ import AuthService from './AuthService'
 class Signup extends Component {
   constructor(props){
     super(props);
-    this.state = { username: '', password: '' };
+    this.state = { username: '', password: '', email: '', name: '' };
     this.service = new AuthService();
   }
     
@@ -15,13 +15,17 @@ class Signup extends Component {
     event.preventDefault();
     const username = this.state.username;
     const password = this.state.password;
+    const email = this.state.email;
+    const name = this.state.name;
 
     //aquí llamamos al endpoint /signup de nuestra API Rest usando nuestro AuthService
-    this.service.signup(username, password)
+    this.service.signup(username, password, email, name)
     .then( response => {
         this.setState({
             username: "", 
             password: "",
+            email: "",
+            name: ""
         });
         //aquí elevamos el nuevo usuario una vez creado a App usando getUser via props
         //por tanto, informamos a App de que el nuevo usuario ha sido creado, provocando un re-render
@@ -32,6 +36,8 @@ class Signup extends Component {
       this.setState({
         username: username,
         password: password,
+        email: email,
+        name: name,
         error: true
       });
     })
@@ -53,7 +59,14 @@ class Signup extends Component {
             <label>Username:</label>
             <input type="text" name="username" value={this.state.username} onChange={ e => this.handleChange(e)}/>
           </fieldset>
-          
+          <fieldset>
+            <label>E-mail:</label>
+            <input type="text" name="email" value={this.state.email} onChange={ e => this.handleChange(e)} />
+          </fieldset>
+          <fieldset>
+            <label>Name:</label>
+            <input type="text" name="name" value={this.state.name} onChange={ e => this.handleChange(e)} />
+          </fieldset>
           <fieldset>
             <label>Password:</label>
             <input type="password" name="password" value={this.state.password} onChange={ e => this.handleChange(e)} />

@@ -1,14 +1,10 @@
-// Seeds file that remove all users and create 2 new users
-
-// To execute this seed, run from the root of the project
-// $ node bin/seeds.js
 
 const mongoose = require("mongoose");
 const EscapeRoom = require("../models/EscapeRooms");
 const escapeRooms = require('../escapeRoomsMad')
 
 mongoose
-  .connect('mongodb://localhost/escapejournal-back', {useNewUrlParser: true})
+  .connect('mongodb+srv://Journal:3PqGVSmpR7l6tB0H@cluster0-xivn5.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })

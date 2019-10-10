@@ -9,12 +9,10 @@ const experienceSchema = new Schema({
   roomsDone: [{ type : Schema.Types.ObjectId, ref: 'Rooms' }],
   team: [{ type : Schema.Types.ObjectId, ref: 'User' }],
   date: Date,
-  picture: String
+  imgName: String,
+  imgPath: String,
 }, {
-  timestamps: {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
-  }
+  timestamps: true
 });
 
 const Experience = mongoose.model('Experience', experienceSchema);
